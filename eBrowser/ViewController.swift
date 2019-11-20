@@ -13,7 +13,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "youtube.com"]
+    var websites = [String]()
     
     override func loadView() {
         webView = WKWebView()
@@ -83,16 +83,20 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     decisionHandler(.allow)
                     return
                 }
-//                    let ac = UIAlertController(title: nil, message: "This URL is blocked!", preferredStyle: .alert)
-//                    ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
-//                    present(ac, animated: true)
-//                    decisionHandler(.cancel)
-//                    return
-//                }
             }
         }
 
         decisionHandler(.cancel)
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        presentAlert()
+    }
+    
+    func presentAlert() {
+        let ac = UIAlertController(title: "Wrong adress", message: "This URL is blocked!", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+        present(ac, animated: true)
     }
 }
 
