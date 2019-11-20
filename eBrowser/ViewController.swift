@@ -29,12 +29,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        let goBackButton = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack))
+        let goForwardButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward))
         
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressButton = UIBarButtonItem(customView: progressView)
         
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [progressButton, spacer, goBackButton, goForwardButton, refresh]
         navigationController?.isToolbarHidden = false
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -84,14 +86,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
 //                    let ac = UIAlertController(title: nil, message: "This URL is blocked!", preferredStyle: .alert)
 //                    ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
 //                    present(ac, animated: true)
-////                    decisionHandler(.cancel)
+//                    decisionHandler(.cancel)
 //                    return
 //                }
             }
         }
-        let ac = UIAlertController(title: nil, message: "This URL is blocked!", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
-        present(ac, animated: true)
+
         decisionHandler(.cancel)
     }
 }
